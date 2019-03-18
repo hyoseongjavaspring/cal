@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div>
+    <input id="num1" placeholder="num1">
+    <input id="num2" placeholder="num2"><br>
+    <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="a">/</option>
+    </select>
+    <button onclick="send()">SUBMIT</button>
+    <div id="display-response">결과</div>
+    <script>
+        async function send(){
+            let e = document.getElementById("operator");
+            let operator = e.options[e.selectedIndex].value;
+            let num1 = $("#num1").val();
+            let num2 =  $("#num2").val();
+            try{
+                let response = await $.get("/cal/" + num1 + "/" + operator + "/" + num2);
+                $('#display-response').html(JSON.stringify(response));
+            } catch (err) {
+                $('#display-response').html(JSON.stringify(err));
+            }
+        }
+    </script>
+</div>
+</body>
+</html>
